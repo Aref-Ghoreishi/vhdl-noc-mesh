@@ -1,0 +1,28 @@
+# Build and simulation output
+build/
+*.cf
+*.o
+*.ghw
+*.vcd
+*.fst
+
+# ModelSim / Questa
+*.mpf
+*.mti
+*.wlf
+work/
+transcript
+modelsim.ini
+
+# Course material and reports
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
