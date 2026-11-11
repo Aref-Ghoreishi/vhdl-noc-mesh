@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    # GHDL 5.1.1 release binaries are built for Ubuntu 24.04, so the runner is pinned to it
+    # instead of ubuntu-latest.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install GHDL 5.1.1 (mcode)
+        uses: ghdl/setup-ghdl@v1.5.1
+        with:
+          version: v5.1.1
+          backend: mcode
+
+      - name: GHDL version
+        run: ghdl --version
+
+      - name: make test
+        run: make test PYTHON=python3
+
+      - name: make sweep (256 runs)
+        run: make sweep PYTHON=python3
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: build/
